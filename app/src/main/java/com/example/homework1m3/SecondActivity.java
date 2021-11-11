@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +18,8 @@ public class SecondActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private String fileManagerString, selectedImgPath;
 
-    private static final int REQUEST_CODE = 1;
+    private static final int GALLERY_REQUEST_CODE = 1;
+    private static final int CAMERA_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +29,13 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     public void onEditPhotoClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_CODE);
-
-
+        Intent galleryPicture = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryPicture, GALLERY_REQUEST_CODE);
     }
 
     public void onAvatarClick(View view) {
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePicture, CAMERA_REQUEST_CODE);
     }
 
     @Override
@@ -41,6 +43,12 @@ public class SecondActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             ivPhoto.setImageURI(selectedImage);
+        }
+
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ivPhoto.setImageBitmap(imageBitmap);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
