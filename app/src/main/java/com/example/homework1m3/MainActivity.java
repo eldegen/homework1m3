@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout etUsername, etPassword;
     private Button btnGo;
 
+    private static final int REQUEST_CODE = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (etUsername.getEditText().length() != 0 && etPassword.getEditText().length() >= 6) {
-            startActivity(new Intent(MainActivity.this, SecondActivity.class));
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            intent.putExtra("Username", etUsername.getEditText().getText().toString());
+            intent.putExtra("Password", etPassword.getEditText().getText().toString());
+
+            startActivity(intent);
         }
     }
 }

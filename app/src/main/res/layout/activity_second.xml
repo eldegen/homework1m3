@@ -48,6 +48,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/ed_wall_username"
             android:singleLine="true"
             android:maxLength="26"
             android:hint="Name"
@@ -91,6 +92,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/ed_wall_password"
             android:drawableStart="@drawable/ic_lock"
             android:hint="Password"
             android:inputType="textPassword"
